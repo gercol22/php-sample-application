@@ -17,6 +17,10 @@ RETURN UNHEX(
 //
 DELIMITER ;
 
+CREATE DATABASE IF NOT EXISTS `sample`;
+
+USE `sample`;
+
 CREATE TABLE `user` (
   `id` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `joined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -47,12 +51,16 @@ INSERT INTO `user` (`id`, `joined`, `name`) VALUES
 ;
 
 INSERT INTO `tweet` (`user_id`, `ts`, `message`) VALUES
-  ('Luke', '2017-01-01 12:34:56', '@Princess_Leia: I\'m @Luke Skywalker and I\'m here to rescue you!'),
+  ('Luke', '2017-01-01 12:34:56', '@Princess_Leia: I m @Luke Skywalker and I m here to rescue you!'),
   ('Obi-Wan', '2016-01-01 14:00:00', '@Luke, the Force will be with you'),
   ('Obi-Wan', '2016-03-02 15:00:00', 'Use the Force, @Luke'),
   ('Obi-Wan', '2016-05-08 09:00:00', 'Your clones are very impressive. You must be very proud.'),
   ('Obi-Wan', '2016-05-09 11:30:00', 'Blast. This is why I hate flying.'),
   ('Darth_Vader', '2017-01-13 16:00:00', '@Luke, I am your father'),
-  ('Darth_Vader', '2016-05-10 19:00:00', 'I\'ve been waiting for you, @Obi-Wan. We meet again, at last.'),
-  ('Darth_Vader', '2016-06-06 23:00:00', 'Your powers are weak, old man.')
-;
+  ('Darth_Vader', '2016-05-10 19:00:00', 'I ve been waiting for you, @Obi-Wan. We meet again, at last.'),
+  ('Darth_Vader', '2016-06-06 23:00:00', 'Your powers are weak, old man.');
+
+CREATE USER IF NOT EXISTS 'sampleuser'@'%' IDENTIFIED BY 'samplepass';
+
+-- Otorgar todos los permisos al usuario sampleuser sobre la base de datos sample
+GRANT ALL PRIVILEGES ON `sample`.* TO 'sampleuser'@'%';
